@@ -1,0 +1,10 @@
+{
+  "cors": {
+    "rules": [
+      {
+        "origin": "https://contoso.com",
+        "allow": true
+      }
+    ]
+  }
+}
