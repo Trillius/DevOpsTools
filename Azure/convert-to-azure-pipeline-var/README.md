@@ -7,7 +7,7 @@ This PowerShell script (`Convert-ToAzurePipelineVar.ps1`) is designed to streaml
 - 📁 **JSON File Parsing:** Converts JSON file contents into a structured format.
 - 🔐 **Security Prompting:** Interactively asks whether variables should be marked as secure.
 - ☁ **Azure DevOps Committing:** Optionally commits variables to a specified Azure DevOps project and pipeline.
-- 📝 **Output to Files:** Can output the variables list to both JSON and text files for documentation.
+- 📝 **Output to Files:** Can output the variables list to JSON file for documentation.
 - 🛠 **Flexible Configuration:** Supports various parameters for customized operation.
 
 ## Prerequisites

@@ -14,17 +14,17 @@ If set, commits generated variables to Azure DevOps using Azure CLI. Otherwise, 
 .PARAMETER u
 Treats all variables as unsecure. If omitted, prompts for each variable's security.
 
-.PARAMETER P
+.PARAMETER p
 Azure DevOps project name for committing variables. Required if -c is set.
 
-.PARAMETER p
+.PARAMETER pl
 Azure DevOps pipeline name for committing variables. Required if -c is set.
 
 .PARAMETER h
 Shows this help message and exits, providing script usage and parameter details.
 
 .PARAMETER o
-Outputs variables to JSON and text files in ".\examples\" directory if set.
+Outputs variables to JSON and text files in ".\samples\" directory if set.
 
 .EXAMPLE
 PS> .\Convert-ToAzurePipelineVar.ps1 -f './path/to/file.json' -c -p 'MyProject' -pl 'MyPipeline'
@@ -82,17 +82,14 @@ param (
     [int]$VSOPipeLine,
 
     [Parameter(Mandatory = $false)]
-    [Alias('h')]
+    [Alias('h', 'help')]
     [switch]$ShowHelp,
 
     [Parameter(Mandatory = $false)]
-    [Alias('o')]
+    [Alias('o', 'output')]
     [switch]$OutputToFile
-
 )
 
-$tempVariables = @{}
-            
 function Convert-JsonToAzureVariables {
     param (
         [pscustomobject]$JsonObject,
@@ -106,6 +103,7 @@ function Convert-JsonToAzureVariables {
         else {
             $currentPath = $prop.Name
         }
+
         if ($prop.Value -is [array]) {
             for ($i = 0; $i -lt $prop.Value.Count; $i++) {
                 $elementPath = "${currentPath}[$i]"
@@ -117,14 +115,14 @@ function Convert-JsonToAzureVariables {
         }
         else {
             if (!$UnsecureValues) {
-                $promptMessage = "Is the variable'$($prop.Name)' with value '$($prop.Value)' a secret? (Y/N)"
+                $promptMessage = "Is the variable'$($prop.Name)' with value '$($prop.Value)' a secret? (Y/N/S) yes, no, skip"
                 $isSecure = Read-Host -Prompt $promptMessage
                 $secret = ($isSecure -eq 'Y' -or $isSecure -eq 'y')
+                if($isSecure -eq 's' -or $isSecure -eq 'S'){ continue }
             }
             else {
                 $secret = $false
             }
-
             $tempVariables[$currentPath] = @{
                 Name     = $currentPath
                 Value    = $prop.Value
@@ -153,23 +151,20 @@ function Send-VariablesToAzure {
         }
     }
     if ($OutputToFile) {
-        $Variables.Values | ConvertTo-Json | Out-File -FilePath ".\examples\output.json"
+        $Variables.Values | ConvertTo-Json | Out-File -FilePath ".\samples\output.json"
     }
 }
-
-if (!$JsonFilePath) {
-    Write-Output "No file path specified, using default file path and disabling commit to Azure DevOps"
-    $JsonFilePath = ".\examples\short.json"
-    $CommitToAzure = $false
-}
-
 
 if ($ShowHelp) {
     Get-Help $MyInvocation.MyCommand.Definition -Detailed
     exit
 }
-
-
+if (!$JsonFilePath) {
+    Write-Output "No file path specified, using default file path and disabling commit to Azure DevOps"
+    $JsonFilePath = ".\samples\short.json"
+    $CommitToAzure = $false
+}
+$tempVariables = @{}
 $jsonContent = Get-Content -Path $JsonFilePath -ErrorAction Stop | Out-String
 $jsonObject = ConvertFrom-Json -InputObject $jsonContent
 Convert-JsonToAzureVariables -JsonObject $jsonObject
