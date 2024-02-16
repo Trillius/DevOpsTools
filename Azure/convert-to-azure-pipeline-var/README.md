@@ -1,7 +1,7 @@
 # 🚀 Azure DevOps Variables Importer 🚀
 
 ## Overview
-This PowerShell script (`convert-to-azure-pipeline-var.ps1`) is designed to streamline the process of converting JSON configuration files into Azure DevOps pipeline variables. It caters to a range of functionalities from parsing JSON files, prompting for variable security, to committing these variables directly to Azure DevOps, and optionally outputting to files for review or documentation purposes.
+This PowerShell script (`Convert-ToAzurePipelineVar.ps1`) is designed to streamline the process of converting JSON configuration files into Azure DevOps pipeline variables. It caters to a range of functionalities from parsing JSON files, prompting for variable security, to committing these variables directly to Azure DevOps, and optionally outputting to files for review or documentation purposes.
 
 ## Features
 - 📁 **JSON File Parsing:** Converts JSON file contents into a structured format.
@@ -33,35 +33,35 @@ This PowerShell script (`convert-to-azure-pipeline-var.ps1`) is designed to stre
 To interactively prompt for the security status of each variable, simply run without the `-u` flag. The script will prompt for each variable:
 
 ```powershell
-.\convert-to-azure-pipeline-var.ps1 -f "./path/to/secure-config.json"
+.\Convert-ToAzurePipelineVar.ps1 -f "./path/to/secure-config.json"
 ```
 ### Commit to Azure DevOps
 To directly commit the variables to a specific Azure DevOps project and pipeline, use the -c flag along with -P for the project and -p for the pipeline:
 ```powershell
-.\convert-to-azure-pipeline-var.ps1 -f "./path/to/azure-config.json" -c -p "YourProject" -pl "YourPipeline"
+.\Convert-ToAzurePipelineVar.ps1 -f "./path/to/azure-config.json" -c -p "YourProject" -pl "YourPipeline"
 ```
 
 ### Output to Files
 To output the variables list to files without committing them to Azure DevOps, include the -o flag:
 ```powershell
-.\convert-to-azure-pipeline-var.ps1 -f "./path/to/file.json" -o
+.\Convert-ToAzurePipelineVar.ps1 -f "./path/to/file.json" -o
 ```
 ### Displaying Help Information
 To display detailed help information about the script and its parameters, use the -h flag:
 ```powershell
-.\convert-to-azure-pipeline-var.ps1 -h
+.\Convert-ToAzurePipelineVar.ps1 -h
 ```
 
 ### Basic Conversion:
 Convert and print variables from config.json:
 ```powershell
-.\convert-to-azure-pipeline-var.ps1 -f "config.json"
+.\Convert-ToAzurePipelineVar.ps1 -f "config.json"
 ```
 
 ### Skip Security Prompt:
 Treat all variables as unsecure from unsecure-config.json and skip the security prompt:
 ```powershell
-.\convert-to-azure-pipeline-var.ps1 -f "unsecure-config.json" -u
+.\Convert-ToAzurePipelineVar.ps1 -f "unsecure-config.json" -u
 ```
 
 ### Contributing

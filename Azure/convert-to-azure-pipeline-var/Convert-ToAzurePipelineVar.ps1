@@ -27,32 +27,32 @@ Shows this help message and exits, providing script usage and parameter details.
 Outputs variables to JSON and text files in ".\examples\" directory if set.
 
 .EXAMPLE
-PS> .\convert-to-azure-pipeline-var.ps1 -f './path/to/file.json' -c -p 'MyProject' -pl 'MyPipeline'
+PS> .\Convert-ToAzurePipelineVar.ps1 -f './path/to/file.json' -c -p 'MyProject' -pl 'MyPipeline'
 
 Reads './path/to/file.json', prompts for secrets, and commits them to the specified Azure DevOps project and pipeline.
 
 .EXAMPLE
-PS> .\convert-to-azure-var.ps1 -f './path/to/file.json' -o
+PS> .\Convert-ToAzurePipelineVar.ps1 -f './path/to/file.json' -o
 
 Reads './path/to/file.json', prompts for secrets, and outputs variables to files without committing to Azure DevOps.
 
 .EXAMPLE
-PS> .\convert-to-azure-var.ps1 -f "C:\config\settings.json"
+PS> .\Convert-ToAzurePipelineVar.ps1 -f "C:\config\settings.json"
 
 This command reads the JSON file located at "C:\config\settings.json", prompts the user to specify if each variable is a secret, and prints the variable details to the console without committing them to Azure DevOps.
 
 .EXAMPLE
-PS> .\convert-to-azure-var.ps1 -f "C:\config\settings.json" -u
+PS> .\Convert-ToAzurePipelineVar.ps1 -f "C:\config\settings.json" -u
 
 Reads the JSON file from "C:\config\settings.json" and treats all variables as unsecured. It then prints all variable details to the console, bypassing the prompt for marking variables as secret.
 
 .EXAMPLE
-PS> .\convert-to-azure-var.ps1 -f "C:\config\settings.json" -c -p "ProjectName" -pl "PipelineName"
+PS> .\Convert-ToAzurePipelineVar.ps1 -f "C:\config\settings.json" -c -p "ProjectName" -pl "PipelineName"
 
 Loads variables from "C:\config\settings.json", prompts for secret designation, and commits them to the specified Azure DevOps project and pipeline. This usage is essential for updating or creating pipeline variables based on the JSON configuration.
 
 .EXAMPLE
-PS> .\convert-to-azure-var.ps1 -h
+PS> .\Convert-ToAzurePipelineVar.ps1 -h
 
 .NOTES
 - Azure CLI required for committing to Azure DevOps.
