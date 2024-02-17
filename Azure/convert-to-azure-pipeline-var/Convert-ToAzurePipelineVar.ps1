@@ -118,7 +118,7 @@ function Convert-JsonToAzureVariables {
                 $promptMessage = "Is the variable'$($prop.Name)' with value '$($prop.Value)' a secret? (Y/N/S) yes, no, skip"
                 $isSecure = Read-Host -Prompt $promptMessage
                 $secret = ($isSecure -eq 'Y' -or $isSecure -eq 'y')
-                if($isSecure -eq 's' -or $isSecure -eq 'S'){ continue }
+                if ($isSecure -eq 's' -or $isSecure -eq 'S') { continue }
             }
             else {
                 $secret = $false
@@ -144,10 +144,12 @@ function Send-VariablesToAzure {
             
         if ($CommitToAzure) {
             #az pipelines variable create --name $variableName --value $variableValue --project $VSOProject --pipeline-id $VSOPipeLine --secret $variableIsSecure --allow-override $true --output table
-            Write-Host "Running Azure CLI command to create/update variable: $variableName , $variableValue , $variableIsSecure"
+            Write-Host "Running Azure CLI command to create/update variable:" -ForegroundColor Blue
+            $Value | Format-Table
         }
         else {
             Write-Host "Variable: $variableName, Value: $variableValue, Secure: $variableIsSecure"
+        
         }
     }
     if ($OutputToFile) {
